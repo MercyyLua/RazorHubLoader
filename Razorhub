@@ -1,0 +1,133 @@
+local player = game:GetService("Players").LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "RazorHubLoader"
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 350, 0, 300)
+frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+frame.AnchorPoint = Vector2.new(0.5, 0.5)
+frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
+
+local stroke = Instance.new("UIStroke", frame)
+stroke.Color = Color3.fromRGB(100, 100, 255)
+stroke.Thickness = 2
+
+local gradient = Instance.new("UIGradient", frame)
+gradient.Color = ColorSequence.new{
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 40, 40)),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
+}
+gradient.Rotation = 90
+
+-- Title
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 50)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "Razor Hub Loader"
+title.Font = Enum.Font.GothamBlack
+title.TextSize = 26
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Status text
+local status = Instance.new("TextLabel", frame)
+status.Size = UDim2.new(1, -20, 0, 25)
+status.Position = UDim2.new(0, 10, 0, 60)
+status.TextColor3 = Color3.fromRGB(200, 200, 200)
+status.TextSize = 18
+status.Font = Enum.Font.Gotham
+status.BackgroundTransparency = 1
+status.Text = "Please Choose..."
+
+-- Drag (works on PC and mobile)
+local UIS = game:GetService("UserInputService")
+local dragging, dragInput, dragStart, startPos
+
+local function update(input)
+	local delta = input.Position - dragStart
+	frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+		startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+title.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = frame.Position
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+title.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+UIS.InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		update(input)
+	end
+end)
+
+-- Button Factory
+local function createButton(text, yPos, callback)
+	local btn = Instance.new("TextButton", frame)
+	btn.Size = UDim2.new(0.8, 0, 0, 40)
+	btn.Position = UDim2.new(0.1, 0, 0, yPos)
+	btn.Text = text
+	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+	btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	btn.Font = Enum.Font.GothamBold
+	btn.TextSize = 18
+
+	local btnCorner = Instance.new("UICorner", btn)
+	btnCorner.CornerRadius = UDim.new(0, 8)
+
+	btn.MouseEnter:Connect(function()
+		btn.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+	end)
+	btn.MouseLeave:Connect(function()
+		btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	end)
+
+	btn.MouseButton1Click:Connect(callback)
+end
+
+-- Buttons
+createButton("Load Hoopz", 100, function()
+	status.Text = "Loading Hoopz..."
+	task.wait(0.5)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/Hoopz/refs/heads/main/Razorhub"))()
+	gui:Destroy()
+end)
+
+createButton("Load FF2 Mobile", 150, function()
+	status.Text = "Loading FF2 Mobile..."
+	task.wait(0.5)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-mobile/refs/heads/main/Mobile"))()
+	gui:Destroy()
+end)
+
+createButton("Load FF2 PC", 200, function()
+	status.Text = "Loading FF2 PC..."
+	task.wait(0.5)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-pc/refs/heads/main/Pc"))()
+	gui:Destroy()
+end)
+
+-- Auto-close fallback (optional)
+task.delay(20, function()
+	if gui and gui.Parent then gui:Destroy() end
+end)
