@@ -90,10 +90,9 @@ UIS.InputChanged:Connect(function(input)
 	if input == dragInput and dragging then update(input) end
 end)
 
--- Key System Logic
+-- Updated Key System (only "e" is valid now)
 local validKeys = {
-	["e"] = true,
-	["GodIsKing"] = true,
+	["e"] = true
 }
 
 continueBtn.MouseButton1Click:Connect(function()
@@ -103,7 +102,6 @@ continueBtn.MouseButton1Click:Connect(function()
 		keyBox:Destroy()
 		continueBtn:Destroy()
 
-		-- Button Factory
 		local function createButton(text, yPos, callback)
 			local btn = Instance.new("TextButton", frame)
 			btn.Size = UDim2.new(0.8, 0, 0, 40)
