@@ -1,57 +1,63 @@
 local player = game:GetService("Players").LocalPlayer
-local gui = Instance.new("ScreenGui")
-gui.Name = "RazorHubLoader"
-gui.IgnoreGuiInset = true
-gui.ResetOnSpawn = false
-gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-gui.Parent = player:WaitForChild("PlayerGui")
 
-local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0, 350, 0, 300)
-frame.Position = UDim2.new(0.5, 0, 0.5, 0)
-frame.AnchorPoint = Vector2.new(0.5, 0.5)
-frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+-- Key UI
+local keyGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+keyGui.Name = "RazorHubKeyUI"
+keyGui.IgnoreGuiInset = true
+keyGui.ResetOnSpawn = false
 
-Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
+local keyFrame = Instance.new("Frame", keyGui)
+keyFrame.Size = UDim2.new(0, 320, 0, 200)
+keyFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+keyFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+keyFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Instance.new("UICorner", keyFrame).CornerRadius = UDim.new(0, 12)
+Instance.new("UIStroke", keyFrame).Color = Color3.fromRGB(100, 100, 255)
 
-local stroke = Instance.new("UIStroke", frame)
-stroke.Color = Color3.fromRGB(100, 100, 255)
-stroke.Thickness = 2
-
-local gradient = Instance.new("UIGradient", frame)
-gradient.Color = ColorSequence.new{
-	ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 40, 40)),
-	ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
-}
-gradient.Rotation = 90
-
--- Title
-local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1, 0, 0, 50)
-title.Position = UDim2.new(0, 0, 0, 0)
-title.BackgroundTransparency = 1
-title.Text = "Razor Hub Loader"
-title.Font = Enum.Font.GothamBlack
-title.TextSize = 26
+local title = Instance.new("TextLabel", keyFrame)
+title.Text = "Razor Hub Key System"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 24
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundTransparency = 1
+title.Size = UDim2.new(1, 0, 0, 50)
 
--- Status text
-local status = Instance.new("TextLabel", frame)
-status.Size = UDim2.new(1, -20, 0, 25)
-status.Position = UDim2.new(0, 10, 0, 60)
-status.TextColor3 = Color3.fromRGB(200, 200, 200)
-status.TextSize = 18
+local box = Instance.new("TextBox", keyFrame)
+box.PlaceholderText = "Enter Key..."
+box.Text = ""
+box.TextSize = 18
+box.Font = Enum.Font.Gotham
+box.Size = UDim2.new(0.8, 0, 0, 40)
+box.Position = UDim2.new(0.1, 0, 0, 70)
+box.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+box.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", box).CornerRadius = UDim.new(0, 8)
+
+local submit = Instance.new("TextButton", keyFrame)
+submit.Text = "Unlock"
+submit.Font = Enum.Font.GothamBold
+submit.TextSize = 18
+submit.Size = UDim2.new(0.6, 0, 0, 40)
+submit.Position = UDim2.new(0.2, 0, 0, 120)
+submit.BackgroundColor3 = Color3.fromRGB(70, 70, 255)
+submit.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", submit).CornerRadius = UDim.new(0, 8)
+
+local status = Instance.new("TextLabel", keyFrame)
+status.Text = ""
 status.Font = Enum.Font.Gotham
+status.TextSize = 16
+status.TextColor3 = Color3.fromRGB(255, 100, 100)
 status.BackgroundTransparency = 1
-status.Text = "Please Choose..."
+status.Size = UDim2.new(1, 0, 0, 30)
+status.Position = UDim2.new(0, 0, 1, -30)
 
--- Drag (works on PC and mobile)
+-- Drag Support
 local UIS = game:GetService("UserInputService")
 local dragging, dragInput, dragStart, startPos
-
 local function update(input)
 	local delta = input.Position - dragStart
-	frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+	keyFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
 		startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
@@ -59,12 +65,9 @@ title.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 		dragging = true
 		dragStart = input.Position
-		startPos = frame.Position
-
+		startPos = keyFrame.Position
 		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
+			if input.UserInputState == Enum.UserInputState.End then dragging = false end
 		end)
 	end
 end)
@@ -76,58 +79,79 @@ title.InputChanged:Connect(function(input)
 end)
 
 UIS.InputChanged:Connect(function(input)
-	if input == dragInput and dragging then
-		update(input)
-	end
+	if input == dragInput and dragging then update(input) end
 end)
 
--- Button Factory
-local function createButton(text, yPos, callback)
-	local btn = Instance.new("TextButton", frame)
-	btn.Size = UDim2.new(0.8, 0, 0, 40)
-	btn.Position = UDim2.new(0.1, 0, 0, yPos)
-	btn.Text = text
-	btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-	btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-	btn.Font = Enum.Font.GothamBold
-	btn.TextSize = 18
+-- Loader GUI creator
+local function openLoaderUI()
+	local loaderGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+	loaderGui.Name = "RazorHubLoader"
+	loaderGui.IgnoreGuiInset = true
+	loaderGui.ResetOnSpawn = false
 
-	local btnCorner = Instance.new("UICorner", btn)
-	btnCorner.CornerRadius = UDim.new(0, 8)
+	local frame = Instance.new("Frame", loaderGui)
+	frame.Size = UDim2.new(0, 350, 0, 300)
+	frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+	frame.AnchorPoint = Vector2.new(0.5, 0.5)
+	frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+	Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
+	Instance.new("UIStroke", frame).Color = Color3.fromRGB(100, 100, 255)
 
-	btn.MouseEnter:Connect(function()
-		btn.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-	end)
-	btn.MouseLeave:Connect(function()
+	local title = Instance.new("TextLabel", frame)
+	title.Size = UDim2.new(1, 0, 0, 50)
+	title.Text = "Razor Hub Loader"
+	title.Font = Enum.Font.GothamBlack
+	title.TextSize = 26
+	title.TextColor3 = Color3.fromRGB(255, 255, 255)
+	title.BackgroundTransparency = 1
+
+	local function createButton(text, yPos, callback)
+		local btn = Instance.new("TextButton", frame)
+		btn.Size = UDim2.new(0.8, 0, 0, 40)
+		btn.Position = UDim2.new(0.1, 0, 0, yPos)
+		btn.Text = text
+		btn.TextColor3 = Color3.fromRGB(255, 255, 255)
 		btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+		btn.Font = Enum.Font.GothamBold
+		btn.TextSize = 18
+		Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
+
+		btn.MouseEnter:Connect(function()
+			btn.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+		end)
+		btn.MouseLeave:Connect(function()
+			btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+		end)
+		btn.MouseButton1Click:Connect(callback)
+	end
+
+	createButton("Load Hoopz", 60, function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/Hoopz/refs/heads/main/Razorhub"))()
+		loaderGui:Destroy()
 	end)
 
-	btn.MouseButton1Click:Connect(callback)
+	createButton("Load FF2 Mobile", 110, function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-mobile/refs/heads/main/Mobile"))()
+		loaderGui:Destroy()
+	end)
+
+	createButton("Load FF2 PC", 160, function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-pc/refs/heads/main/Pc"))()
+		loaderGui:Destroy()
+	end)
 end
 
--- Buttons
-createButton("Load Hoopz", 100, function()
-	status.Text = "Loading Hoopz..."
-	task.wait(0.5)
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/Hoopz/refs/heads/main/Razorhub"))()
-	gui:Destroy()
-end)
-
-createButton("Load FF2 Mobile", 150, function()
-	status.Text = "Loading FF2 Mobile..."
-	task.wait(0.5)
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-mobile/refs/heads/main/Mobile"))()
-	gui:Destroy()
-end)
-
-createButton("Load FF2 PC", 200, function()
-	status.Text = "Loading FF2 PC..."
-	task.wait(0.5)
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-pc/refs/heads/main/Pc"))()
-	gui:Destroy()
-end)
-
--- Auto-close fallback (optional)
-task.delay(20, function()
-	if gui and gui.Parent then gui:Destroy() end
+-- Key check
+local validKey = "e"
+submit.MouseButton1Click:Connect(function()
+	if box.Text:lower() == validKey:lower() then
+		status.Text = "Key valid! Opening loader..."
+		status.TextColor3 = Color3.fromRGB(100, 255, 100)
+		task.wait(1)
+		keyGui:Destroy()
+		openLoaderUI()
+	else
+		status.Text = "Invalid key!"
+		status.TextColor3 = Color3.fromRGB(255, 100, 100)
+	end
 end)
