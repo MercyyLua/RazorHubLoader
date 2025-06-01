@@ -1,144 +1,144 @@
-if game:GetService("Players").LocalPlayer then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
 
-    local player = game:GetService("Players").LocalPlayer
-    local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-    gui.Name = "RazorHubLoader"
-    gui.IgnoreGuiInset = true
-    gui.ResetOnSpawn = false
-    gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+local player = game:GetService("Players").LocalPlayer
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.Name = "RazorHubLoader"
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 
-    local frame = Instance.new("Frame", gui)
-    frame.Size = UDim2.new(0, 350, 0, 300)
-    frame.Position = UDim2.new(0.5, 0, 0.5, 0)
-    frame.AnchorPoint = Vector2.new(0.5, 0.5)
-    frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 350, 0, 300)
+frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+frame.AnchorPoint = Vector2.new(0.5, 0.5)
+frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
 
-    local stroke = Instance.new("UIStroke", frame)
-    stroke.Color = Color3.fromRGB(100, 100, 255)
-    stroke.Thickness = 2
+local stroke = Instance.new("UIStroke", frame)
+stroke.Color = Color3.fromRGB(100, 100, 255)
+stroke.Thickness = 2
 
-    local gradient = Instance.new("UIGradient", frame)
-    gradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 40, 40)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
-    }
-    gradient.Rotation = 90
+local gradient = Instance.new("UIGradient", frame)
+gradient.Color = ColorSequence.new{
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 40, 40)),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
+}
+gradient.Rotation = 90
 
-    local title = Instance.new("TextLabel", frame)
-    title.Size = UDim2.new(1, 0, 0, 50)
-    title.BackgroundTransparency = 1
-    title.Text = "Razor Hub Loader"
-    title.Font = Enum.Font.GothamBlack
-    title.TextSize = 26
-    title.TextColor3 = Color3.fromRGB(255, 255, 255)
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 50)
+title.BackgroundTransparency = 1
+title.Text = "Razor Hub Loader"
+title.Font = Enum.Font.GothamBlack
+title.TextSize = 26
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-    local status = Instance.new("TextLabel", frame)
-    status.Size = UDim2.new(1, -20, 0, 25)
-    status.Position = UDim2.new(0, 10, 0, 60)
-    status.TextColor3 = Color3.fromRGB(200, 200, 200)
-    status.TextSize = 18
-    status.Font = Enum.Font.Gotham
-    status.BackgroundTransparency = 1
-    status.Text = "Enter key to continue..."
+local status = Instance.new("TextLabel", frame)
+status.Size = UDim2.new(1, -20, 0, 25)
+status.Position = UDim2.new(0, 10, 0, 60)
+status.TextColor3 = Color3.fromRGB(200, 200, 200)
+status.TextSize = 18
+status.Font = Enum.Font.Gotham
+status.BackgroundTransparency = 1
+status.Text = "Enter key to continue..."
 
-    local keyBox = Instance.new("TextBox", frame)
-    keyBox.Size = UDim2.new(0.8, 0, 0, 40)
-    keyBox.Position = UDim2.new(0.1, 0, 0, 100)
-    keyBox.PlaceholderText = "Enter Key..."
-    keyBox.Text = ""
-    keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-    keyBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    keyBox.Font = Enum.Font.GothamBold
-    keyBox.TextSize = 18
-    Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0, 8)
+local keyBox = Instance.new("TextBox", frame)
+keyBox.Size = UDim2.new(0.8, 0, 0, 40)
+keyBox.Position = UDim2.new(0.1, 0, 0, 100)
+keyBox.PlaceholderText = "Enter Key..."
+keyBox.Text = ""
+keyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+keyBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+keyBox.Font = Enum.Font.GothamBold
+keyBox.TextSize = 18
+Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0, 8)
 
-    local continueBtn = Instance.new("TextButton", frame)
-    continueBtn.Size = UDim2.new(0.8, 0, 0, 40)
-    continueBtn.Position = UDim2.new(0.1, 0, 0, 150)
-    continueBtn.Text = "Continue"
-    continueBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    continueBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    continueBtn.Font = Enum.Font.GothamBold
-    continueBtn.TextSize = 18
-    Instance.new("UICorner", continueBtn).CornerRadius = UDim.new(0, 8)
+local continueBtn = Instance.new("TextButton", frame)
+continueBtn.Size = UDim2.new(0.8, 0, 0, 40)
+continueBtn.Position = UDim2.new(0.1, 0, 0, 150)
+continueBtn.Text = "Continue"
+continueBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+continueBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+continueBtn.Font = Enum.Font.GothamBold
+continueBtn.TextSize = 18
+Instance.new("UICorner", continueBtn).CornerRadius = UDim.new(0, 8)
 
-    local UIS = game:GetService("UserInputService")
-    local dragging, dragInput, dragStart, startPos
+-- Draggable GUI
+local UIS = game:GetService("UserInputService")
+local dragging, dragInput, dragStart, startPos
 
-    local function update(input)
-        local delta = input.Position - dragStart
-        frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
-
-    title.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = frame.Position
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then dragging = false end
-            end)
-        end
-    end)
-
-    title.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
-        end
-    end)
-
-    UIS.InputChanged:Connect(function(input)
-        if input == dragInput and dragging then update(input) end
-    end)
-
-    local validKeys = {["e"] = true}
-
-    continueBtn.MouseButton1Click:Connect(function()
-        local key = keyBox.Text
-        if validKeys[key] then
-            status.Text = "Key valid. Choose a script..."
-            keyBox:Destroy()
-            continueBtn:Destroy()
-
-            local function createButton(text, yPos, callback)
-                local btn = Instance.new("TextButton", frame)
-                btn.Size = UDim2.new(0.8, 0, 0, 40)
-                btn.Position = UDim2.new(0.1, 0, 0, yPos)
-                btn.Text = text
-                btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-                btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-                btn.Font = Enum.Font.GothamBold
-                btn.TextSize = 18
-                Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
-                btn.MouseButton1Click:Connect(callback)
-            end
-
-            createButton("Load Hoopz", 110, function()
-                status.Text = "Loading Hoopz..."
-                task.wait(0.5)
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/Hoopz/refs/heads/main/Razorhub"))()
-                gui:Destroy()
-            end)
-
-            createButton("Load FF2 Mobile", 160, function()
-                status.Text = "Loading FF2 Mobile..."
-                task.wait(0.5)
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-mobile/refs/heads/main/Mobile"))()
-                gui:Destroy()
-            end)
-
-            createButton("Load FF2 PC", 210, function()
-                status.Text = "Loading FF2 PC..."
-                task.wait(0.5)
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-pc/refs/heads/main/Pc"))()
-                gui:Destroy()
-            end)
-        else
-            status.Text = "Invalid key. Try again."
-        end
-    end)
-else
-    warn("Razor Hub Loader must be run by a LocalPlayer (client-side)")
+local function update(input)
+	local delta = input.Position - dragStart
+	frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
+
+title.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = frame.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then dragging = false end
+		end)
+	end
+end)
+
+title.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+UIS.InputChanged:Connect(function(input)
+	if input == dragInput and dragging then update(input) end
+end)
+
+-- Key system
+local validKeys = {
+	["e"] = true
+}
+
+continueBtn.MouseButton1Click:Connect(function()
+	local key = keyBox.Text
+	if validKeys[key] then
+		status.Text = "Key valid. Choose a script..."
+		keyBox:Destroy()
+		continueBtn:Destroy()
+
+		local function createButton(text, yPos, callback)
+			local btn = Instance.new("TextButton", frame)
+			btn.Size = UDim2.new(0.8, 0, 0, 40)
+			btn.Position = UDim2.new(0.1, 0, 0, yPos)
+			btn.Text = text
+			btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+			btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			btn.Font = Enum.Font.GothamBold
+			btn.TextSize = 18
+			Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
+			btn.MouseButton1Click:Connect(callback)
+		end
+
+		createButton("Load Hoopz", 110, function()
+			status.Text = "Loading Hoopz..."
+			task.wait(0.5)
+			gui:Destroy()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/Hoopz/main/Razorhub"))()
+		end)
+
+		createButton("Load FF2 Mobile", 160, function()
+			status.Text = "Loading FF2 Mobile..."
+			task.wait(0.5)
+			gui:Destroy()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-mobile/main/Mobile"))()
+		end)
+
+		createButton("Load FF2 PC", 210, function()
+			status.Text = "Loading FF2 PC..."
+			task.wait(0.5)
+			gui:Destroy()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-pc/main/Pc"))()
+		end)
+	else
+		status.Text = "Invalid key. Try again."
+	end
+end)
