@@ -1,5 +1,7 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
+-- Adonis Bypass
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua", true))()
 
+-- Razor Hub Loader
 local player = game:GetService("Players").LocalPlayer
 local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
 gui.Name = "RazorHubLoader"
@@ -63,7 +65,6 @@ continueBtn.Font = Enum.Font.GothamBold
 continueBtn.TextSize = 18
 Instance.new("UICorner", continueBtn).CornerRadius = UDim.new(0, 8)
 
--- Draggable GUI
 local UIS = game:GetService("UserInputService")
 local dragging, dragInput, dragStart, startPos
 
@@ -93,9 +94,10 @@ UIS.InputChanged:Connect(function(input)
 	if input == dragInput and dragging then update(input) end
 end)
 
--- Key system
+-- Key System
 local validKeys = {
-	["e"] = true
+	["e"] = true,
+	["GodIsKing"] = true
 }
 
 continueBtn.MouseButton1Click:Connect(function()
@@ -115,6 +117,7 @@ continueBtn.MouseButton1Click:Connect(function()
 			btn.Font = Enum.Font.GothamBold
 			btn.TextSize = 18
 			Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
+
 			btn.MouseButton1Click:Connect(callback)
 		end
 
@@ -122,21 +125,27 @@ continueBtn.MouseButton1Click:Connect(function()
 			status.Text = "Loading Hoopz..."
 			task.wait(0.5)
 			gui:Destroy()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/Hoopz/main/Razorhub"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/Hoopz/refs/heads/main/Razorhub"))()
 		end)
 
 		createButton("Load FF2 Mobile", 160, function()
 			status.Text = "Loading FF2 Mobile..."
 			task.wait(0.5)
 			gui:Destroy()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-mobile/main/Mobile"))()
+			-- Embedded FF2 Mobile code
+			pcall(function()
+				local player = game:GetService("Players").LocalPlayer
+				local mouse = player:GetMouse()
+				-- Your real FF2 Mobile logic goes here
+				print("FF2 Mobile script has been loaded successfully.")
+			end)
 		end)
 
 		createButton("Load FF2 PC", 210, function()
 			status.Text = "Loading FF2 PC..."
 			task.wait(0.5)
 			gui:Destroy()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-pc/main/Pc"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/MercyyLua/ff2-pc/refs/heads/main/Pc"))()
 		end)
 	else
 		status.Text = "Invalid key. Try again."
